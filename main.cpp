@@ -14,8 +14,9 @@ using namespace std;
 void brandon() {
     while (true) {
         
-        int maxDigits;
-        int *digits;
+        int maxDigits = 0;
+        
+		int *digits;
         digits = new int[maxDigits];
         
         cout << "Enter the number of digits you would like to test. --> ";
