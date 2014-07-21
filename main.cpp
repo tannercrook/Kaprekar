@@ -68,11 +68,10 @@ int main(int argc, const char * argv[])
 //  Copyright (c) 2014 Brandon Weathers. All Rights Reserved.
 //
 
-void sort();
-void compare();
-void cellCheck(int digits[], int length);
-void convertToNumber();
-void convertToArray();
+int cellCheck(int digits[], int length);
+int sortDescend(int digits[], int descend[], int length);
+int sortAscend(int digits[], int ascend[], int length);
+int difference(int descend[], int ascend[], int length);
 
 int main()
 {
@@ -85,6 +84,18 @@ int main()
 	int *digits;
 	digits = new int[length];
 
+	//Place Holder Array for Descending Order//
+	int *descend;
+	descend = new int[length];
+
+	//Place Holder Array for Ascending Order//
+	int *ascend;
+	ascend = new int[length];
+
+	//Place Holder Array for Difference//
+	int *diff;
+	diff = new int[length];
+
 	//Place Holder Array//
 	int *prev;
 	prev = new int[length];
@@ -94,11 +105,17 @@ int main()
 	cur = new int[length];
 
 
-
+	//Fill Array With Zeros//
 	for (int i = 0; i < length; i++)
-		digits[i] = 0;
+			digits[i] = 0;
 
-	cellCheck(digits, length);
+	*digits = cellCheck(digits, length);
+
+	*descend = sortDescend(digits, descend, length);
+	*ascend = sortAscend(digits, ascend, length);
+	*diff = difference(descend, ascend, length);
+	
+	
 
 	do
 	{
@@ -112,28 +129,10 @@ int main()
 
 
 
-void sort()
-{
-
-
-}
-
-
-
-void compare()
-{
-
-
-}
-
-
-
-void cellCheck(int digits[], int length)
+int cellCheck(int digits[], int length)
 {
 	int flag = 0;
-	
-	cout << endl << digits[0] << digits[1] << digits[2] << endl;;
-	
+		
 	for (int i = 0; i < length - 1; i++)
 	{
 		if (digits[i] == digits[i + 1])
@@ -142,12 +141,27 @@ void cellCheck(int digits[], int length)
 		}
 	}
 
-	if (flag == length-1)
+	if (flag == length - 1)
 	{
-		cout << endl;
-		cout << "All values of the array are the same!" << endl;
-		cout << "The array contains " << length << " " << digits[0] << "\'s." << endl << endl;
+		//Increments value by 1 if all numbers in array are the same.//
+		std::stringstream ss;
+		for (unsigned i = 0; i < length; ++i)
+			ss << digits[i];
+		
+		int increment;
+		ss >> increment;
+		increment = increment + 1;
+		
+		for (int i = length - 1; i >= 0; i--)
+		{
+			digits[i] = increment % 10;
+			increment /= 10;
+		}
+
+		return *digits;
 	}
+	
+	/*
 	else
 	{
 		cout << endl;
@@ -159,28 +173,68 @@ void cellCheck(int digits[], int length)
 		
 		cout << endl << endl;
 	}
-		
-}
-
-
-
-void convertToNumber()
-{
-	//Something like this//
-	/*
-	int temp;
-	stringstream convert(number);
-	if (!(convert >> temp))
-		temp = 0;
-
-	cout << endl << endl;
-	cout << temp + 1;
 	*/
 }
 
 
 
-void convertToArray()
+int sortDescend(int digits[], int descend[], int length)
+{
+	for (int i = 0; i < length; i++)
+	{
+		descend[i] = digits[i];
+	}
+	
+	for (int i = 0; i < length; i++)
+	{
+		for (int j = 0; j < length - 1; j++)
+		{
+			if (descend[j] < descend[j + 1])
+			{
+				int temp;
+				temp = descend[j];
+				descend[j] = descend[j + 1];
+				descend[j + 1] = temp;
+			}
+		}
+	}
+	
+	
+	return *descend;
+}
+
+int sortAscend(int digits[], int ascend[], int length)
+{
+	for (int i = 0; i < length; i++)
+	{
+		ascend[i] = digits[i];
+	}
+
+	for (int i = 0; i < length; i++)
+	{
+		for (int j = 0; j < length - 1; j++)
+		{
+			if (ascend[j] > ascend[j + 1])
+			{
+				int temp;
+				temp = ascend[j];
+				ascend[j] = ascend[j + 1];
+				ascend[j + 1] = temp;
+			}
+		}
+	}
+	
+	return *ascend;
+}
+
+
+
+int difference(int descend[], int ascend[], int length)
 {
 
+	for (int i = 0; i < length; i++)
+	{
+		
+	}
+	return 0;
 }
